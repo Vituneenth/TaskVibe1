@@ -60,9 +60,9 @@ export default function Landing() {
               <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <Zap className="text-green-600 dark:text-green-400 w-6 h-6" />
               </div>
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Smart Reminders</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Visual Progress</h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm">
-                Get gentle, friendly reminders throughout the day to keep you on track without overwhelming you.
+                Visual cues and progress tracking to keep you motivated and on track with your goals.
               </p>
             </CardContent>
           </Card>
@@ -75,10 +75,10 @@ export default function Landing() {
             className="px-8 py-3 text-lg font-semibold"
             onClick={() => window.location.href = "/api/login"}
           >
-            Get Started with TaskVibe 🚀
+            Get Started with TaskVibe
           </Button>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Sign in with your Replit account to begin your productivity journey
+            Click to start using TaskVibe locally on your device
           </p>
         </div>
       </div>

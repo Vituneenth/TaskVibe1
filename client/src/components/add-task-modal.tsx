@@ -33,7 +33,7 @@ export function AddTaskModal({ open, onOpenChange, editingTask }: AddTaskModalPr
       queryClient.invalidateQueries({ queryKey: ["/api/stats"] });
       toast({
         title: "Success!",
-        description: "Task added successfully! 🎉",
+        description: "Task added successfully!",
       });
       resetForm();
       onOpenChange(false);
@@ -56,7 +56,7 @@ export function AddTaskModal({ open, onOpenChange, editingTask }: AddTaskModalPr
       queryClient.invalidateQueries({ queryKey: ["/api/tasks"] });
       toast({
         title: "Success!",
-        description: "Task updated successfully! ✅",
+        description: "Task updated successfully!",
       });
       resetForm();
       onOpenChange(false);

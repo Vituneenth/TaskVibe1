@@ -129,16 +129,30 @@ export class DatabaseStorage implements IStorage {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    await this.updateDailyStats(userId, today, {
-      tasksCompleted: sql`tasks_completed + 1`,
-      [`${task.urgency}Completed`]: sql`${task.urgency}_completed + 1`,
-      xpEarned: sql`xp_earned + ${this.getXPForUrgency(task.urgency)}`,
-    } as any);
+    // Update daily stats
+    const existingStats = await this.getUserDailyStats(userId, today);
+    const newStats = {
+      tasksCompleted: (existingStats?.tasksCompleted || 0) + 1,
+      xpEarned: (existingStats?.xpEarned || 0) + this.getXPForUrgency(task.urgency),
+    } as any;
+    
+    // Update urgency-specific completed count
+    if (task.urgency === 'immediate') {
+      newStats.immediateCompleted = (existingStats?.immediateCompleted || 0) + 1;
+    } else if (task.urgency === 'medium') {
+      newStats.mediumCompleted = (existingStats?.mediumCompleted || 0) + 1;
+    } else if (task.urgency === 'delayed') {
+      newStats.delayedCompleted = (existingStats?.delayedCompleted || 0) + 1;
+    }
+    
+    await this.updateDailyStats(userId, today, newStats);
     
     // Update user XP
     const user = await this.getUser(userId);
     if (user) {
-      const newXP = user.xp + this.getXPForUrgency(task.urgency);
+      const currentXP = user.xp || 0;
+      const currentLevel = user.level || 1;
+      const newXP = currentXP + this.getXPForUrgency(task.urgency);
       const newLevel = Math.floor(newXP / 100) + 1;
       
       await this.updateUserStats(userId, {
@@ -148,7 +162,7 @@ export class DatabaseStorage implements IStorage {
       });
       
       // Check for level up achievement
-      if (newLevel > user.level) {
+      if (newLevel > currentLevel) {
         await this.addAchievement(userId, {
           type: 'level',
           title: 'Level Up!',

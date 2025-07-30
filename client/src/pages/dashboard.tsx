@@ -69,7 +69,7 @@ export default function Dashboard() {
       queryClient.invalidateQueries({ queryKey: ["/api/achievements"] });
       toast({
         title: "Great job!",
-        description: "Task completed! ✅",
+        description: "Task completed!",
       });
     },
     onError: (error) => {
@@ -170,7 +170,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {getGreeting()}, {user.nickname || user.firstName || "there"}! 🌟
+                  {getGreeting()}, {user.nickname || user.firstName || "there"}!
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 mt-1">
                   You've completed <span className="font-semibold text-indigo-600 dark:text-indigo-400">{stats?.todayCompleted || 0}</span> tasks today

@@ -32,7 +32,7 @@ export function OnboardingModal({ open, onComplete }: OnboardingModalProps) {
       queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });
       toast({
         title: "Welcome to TaskVibe!",
-        description: "Let's get you organized and motivated! 🚀",
+        description: "Let's get you organized and motivated!",
       });
       onComplete();
     },
@@ -53,7 +53,7 @@ export function OnboardingModal({ open, onComplete }: OnboardingModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={() => {}}>
-      <DialogContent className="max-w-md" hideCloseButton>
+      <DialogContent className="max-w-md">
         <div className="text-center mb-6">
           <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center mx-auto mb-4">
             <Rocket className="text-indigo-600 dark:text-indigo-400 w-8 h-8" />
@@ -121,7 +121,7 @@ export function OnboardingModal({ open, onComplete }: OnboardingModalProps) {
             className="w-full" 
             disabled={!nickname.trim() || completeMutation.isPending}
           >
-            Let's Get Started! 🚀
+            Let's Get Started!
           </Button>
         </form>
       </DialogContent>
