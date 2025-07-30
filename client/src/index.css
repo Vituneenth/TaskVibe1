@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(221, 83%, 53%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* TaskVibe specific colors */
+  --warm-urgent: hsl(0, 84%, 60%);
+  --warm-medium: hsl(25, 95%, 53%);
+  --warm-light: hsl(45, 93%, 47%);
+  --cold-urgent: hsl(221, 83%, 53%);
+  --cold-medium: hsl(142, 71%, 45%);
+  --cold-light: hsl(262, 83%, 58%);
+}
+
+.dark {
+  --background: hsl(224, 71%, 4%);
+  --foreground: hsl(210, 20%, 98%);
+  --muted: hsl(215, 27%, 17%);
+  --muted-foreground: hsl(217, 10%, 64%);
+  --popover: hsl(224, 71%, 4%);
+  --popover-foreground: hsl(210, 20%, 98%);
+  --card: hsl(224, 71%, 4%);
+  --card-foreground: hsl(210, 20%, 98%);
+  --border: hsl(215, 27%, 17%);
+  --input: hsl(215, 27%, 17%);
+  --primary: hsl(221, 83%, 53%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(215, 27%, 17%);
+  --secondary-foreground: hsl(210, 20%, 98%);
+  --accent: hsl(215, 27%, 17%);
+  --accent-foreground: hsl(210, 20%, 98%);
+  --destructive: hsl(0, 62%, 30%);
+  --destructive-foreground: hsl(210, 20%, 98%);
+  --ring: hsl(216, 12%, 84%);
+  --radius: 0.5rem;
+  
+  /* TaskVibe specific colors for dark mode */
+  --warm-urgent: hsl(0, 84%, 60%);
+  --warm-medium: hsl(25, 95%, 53%);
+  --warm-light: hsl(45, 93%, 47%);
+  --cold-urgent: hsl(221, 83%, 53%);
+  --cold-medium: hsl(142, 71%, 45%);
+  --cold-light: hsl(262, 83%, 58%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+/* Custom animations for TaskVibe */
+@keyframes task-complete {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(0.9); opacity: 0.5; }
+}
+
+.task-completing {
+  animation: task-complete 0.3s ease-out;
+}
+
+/* Gradient backgrounds for urgency buckets */
+.gradient-immediate {
+  background: linear-gradient(135deg, var(--warm-urgent) 0%, var(--warm-medium) 100%);
+}
+
+.gradient-medium {
+  background: linear-gradient(135deg, var(--warm-light) 0%, var(--warm-medium) 100%);
+}
+
+.gradient-delayed {
+  background: linear-gradient(135deg, var(--cold-urgent) 0%, var(--cold-medium) 100%);
+}
+
+/* Smooth transitions for theme switching */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
