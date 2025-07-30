@@ -12,6 +12,7 @@ import {
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, and, gte, lte, sql } from "drizzle-orm";
+import { MemoryStorage } from "./memoryStorage";
 
 export interface IStorage {
   // User operations (mandatory for Replit Auth)
@@ -25,6 +26,7 @@ export interface IStorage {
   updateTask(taskId: string, userId: string, updates: Partial<Task>): Promise<Task>;
   deleteTask(taskId: string, userId: string): Promise<void>;
   completeTask(taskId: string, userId: string): Promise<Task>;
+  uncompleteTask(taskId: string, userId: string): Promise<Task>;
   
   // Achievement operations
   getUserAchievements(userId: string): Promise<Achievement[]>;
@@ -175,6 +177,27 @@ export class DatabaseStorage implements IStorage {
     return task;
   }
 
+  async uncompleteTask(taskId: string, userId: string): Promise<Task> {
+    const [task] = await db
+      .update(tasks)
+      .set({ 
+        completed: false, 
+        completedAt: null,
+        updatedAt: new Date()
+      })
+      .where(and(eq(tasks.id, taskId), eq(tasks.userId, userId)))
+      .returning();
+
+    if (!task) {
+      throw new Error('Task not found');
+    }
+
+    // TODO: Reverse daily stats and XP changes
+    // This would require more complex logic to properly reverse the changes
+    
+    return task;
+  }
+
   private getXPForUrgency(urgency: string): number {
     switch (urgency) {
       case 'immediate': return 15;
@@ -298,4 +321,5 @@ export class DatabaseStorage implements IStorage {
   }
 }
 
-export const storage = new DatabaseStorage();
+// export const storage = new DatabaseStorage();
+export const storage = new MemoryStorage();

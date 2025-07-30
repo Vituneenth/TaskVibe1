@@ -19,6 +19,7 @@ export interface IStorage {
   updateTask(taskId: string, userId: string, updates: Partial<Task>): Promise<Task>;
   deleteTask(taskId: string, userId: string): Promise<void>;
   completeTask(taskId: string, userId: string): Promise<Task>;
+  uncompleteTask(taskId: string, userId: string): Promise<Task>;
   
   // Achievement operations
   getUserAchievements(userId: string): Promise<Achievement[]>;
