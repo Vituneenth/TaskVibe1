@@ -1,0 +1,84 @@
+## Product Requirements Prompt for Task management App
+
+
+**Product name**: (Working title) TaskVibe
+
+**One-sentence idea description**:  
+A minimal yet colorful, gamified app that manages, prioritizes, and reminds users about personal and work tasks with smart patterns and gentle nudges, keeping them organized and motivated.
+
+**User journey / flow**
+
+1. **Signup & Onboarding**
+   - User creates an account with email login; stays logged in for convenience.
+   - App welcomes the user, asks for name/nickname, and connects email/calendar for sync only.
+
+2. **Task Input & Management**
+   - User starts by entering “immediate tasks.”
+   - As those get completed, prompts for “less immediate” and then “can be delayed” tasks.
+   - Tasks are grouped by urgency, each with its own color scheme (cold for low, warm for high).
+   - Dashboard UI to view, add, delete, and review tasks.
+
+3. **Reminders & Notifications**
+   - Provides up to 3 reminders per day for *each* task category (immediate, less immediate, delayed) between 2PM and 10PM.
+   - Reminders are in-app and calendar-based (never email).
+   - Calendar sync only for the least urgent category.
+
+4. **Theme Switching**
+   - User can toggle between **light mode, dark mode, or system default** for interface appearance at any time.
+   - All interface elements, including color-coded urgency buckets and dashboard, adapt seamlessly to the selected theme.
+
+5. **Gamified Dashboard**
+   - Clean, minimal, dashboard-focused layout.
+   - Gamified elements (e.g., streaks, badges for consistent use or achieving priorities).
+
+6. **Daily Review**
+   - At 10PM, the app shows a summary of completed tasks.
+   - User can review, celebrate, or reflect on progress.
+
+7. **AI-Powered Suggestions (after 1 month)**
+   - Once a user has been active for a month, the app analyzes patterns:
+     - Recurring tasks/behaviors
+     - Likely times tasks are completed
+   - Provides smart suggestions:
+     - Suggests commonly recurring tasks with a feature to add them 
+     - Recommends the best time of day for reminders, personalized to the user’s habits
+
+**Target audience**  
+Students, working professionals, and anyone who wants to organize day-to-day and simple work tasks in a personal, engaging way.
+
+**List of core features**
+
+- Email-based login & persistent sessions
+- Task bucket system by urgency
+- Automated priority ranking within buckets
+- 3 daily reminders per category, post-2PM and pre-10PM
+- In-app and calendar-based reminders (no emails)
+- Dashboard with gamified progress, streaks, and color-coded urgency
+- Theme switching: **Light, dark, or system default modes**
+- End-of-day review digest
+- Task CRUD (add, delete, mark complete, review history)
+- Gentle, friendly, slightly pressing tone
+- Minimal, colorful, gamified design
+
+**Suggested tools or stack**
+
+- **Frontend**: React (web), React Native or Flutter (mobile)
+- **Auth & Database**: Supabase (handles user login and task storage), Firebase (as an alternative)
+- **AI assistant & analytics**: OpenAI API for pattern analysis and smart suggestions
+- **Calendar Sync**: Google Calendar API
+- **Push notifications**: Expo/OneSignal for mobile, browser push for web
+
+**Vibe or design notes**
+
+- Minimal but visually lively: dashboard elements, color-coded urgency buckets, warm and cold palettes
+- Gamified touches: simple XP/streak indicators, badges for consistency or improvement
+- Theme switching feature: all color and UI elements adapt elegantly to light/dark/system
+- Playful but non-intrusive interaction cues (subtle animations, motivational copy)
+
+**Future feature ideas**
+
+- Social accountability (optional sharing/progress with friends)
+- Advanced analytics (personal productivity trends)
+- More robust AI assistant: proactive scheduling, contextual tips
+- Integration with other productivity tools (Trello, Notion, etc.) and Google Keep
+- Voice-based task entry
