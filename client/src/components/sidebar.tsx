@@ -67,27 +67,23 @@ export function Sidebar({ user }: SidebarProps) {
         
         {/* Navigation Menu */}
         <nav className="space-y-2">
-          <Link href="/">
-            <a className={cn(
-              "flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors",
-              location === "/" 
-                ? "bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300" 
-                : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
-            )}>
-              <Home className="w-5 h-5" />
-              <span className="font-medium">Dashboard</span>
-            </a>
+          <Link href="/" className={cn(
+            "flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors",
+            location === "/" 
+              ? "bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300" 
+              : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+          )}>
+            <Home className="w-5 h-5" />
+            <span className="font-medium">Dashboard</span>
           </Link>
-          <Link href="/task-history">
-            <a className={cn(
-              "flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors",
-              location === "/task-history"
-                ? "bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300"
-                : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
-            )}>
-              <Clock className="w-5 h-5" />
-              <span>Task History</span>
-            </a>
+          <Link href="/task-history" className={cn(
+            "flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors",
+            location === "/task-history"
+              ? "bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300"
+              : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+          )}>
+            <Clock className="w-5 h-5" />
+            <span>Task History</span>
           </Link>
           <a href="#" className="flex items-center space-x-3 px-3 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
             <BarChart3 className="w-5 h-5" />

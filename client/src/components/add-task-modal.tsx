@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,11 +18,26 @@ interface AddTaskModalProps {
 }
 
 export function AddTaskModal({ open, onOpenChange, editingTask, defaultUrgency }: AddTaskModalProps) {
-  const [title, setTitle] = useState(editingTask?.title || "");
-  const [description, setDescription] = useState(editingTask?.description || "");
-  const [urgency, setUrgency] = useState(editingTask?.urgency || defaultUrgency || "medium");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [urgency, setUrgency] = useState("medium");
   const { toast } = useToast();
   const queryClient = useQueryClient();
+
+  // Reset form when modal opens or editingTask/defaultUrgency changes
+  useEffect(() => {
+    if (open) {
+      if (editingTask) {
+        setTitle(editingTask.title);
+        setDescription(editingTask.description || "");
+        setUrgency(editingTask.urgency);
+      } else {
+        setTitle("");
+        setDescription("");
+        setUrgency(defaultUrgency || "medium");
+      }
+    }
+  }, [open, editingTask, defaultUrgency]);
 
   const createTaskMutation = useMutation({
     mutationFn: async (taskData: { title: string; description?: string; urgency: string }) => {

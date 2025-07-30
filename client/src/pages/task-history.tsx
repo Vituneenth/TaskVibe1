@@ -202,7 +202,51 @@ export default function TaskHistory() {
             </TabsList>
 
             <TabsContent value="all">
-              <TaskList tasks={completedTasks} urgency="all" />
+              <div className="space-y-3">
+                {completedTasks.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                    No completed tasks yet
+                  </div>
+                ) : (
+                  completedTasks.map((task) => (
+                    <Card key={task.id} className="transition-all hover:shadow-md">
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              {getUrgencyIcon(task.urgency)}
+                              <Badge className={getUrgencyColor(task.urgency)}>
+                                {getUrgencyLabel(task.urgency)}
+                              </Badge>
+                            </div>
+                            <h3 className="font-medium text-gray-900 dark:text-white mb-1">
+                              {task.title}
+                            </h3>
+                            {task.description && (
+                              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                                {task.description}
+                              </p>
+                            )}
+                            <div className="text-xs text-gray-500 dark:text-gray-400">
+                              Completed: {task.completedAt ? format(new Date(task.completedAt), "MMM d, yyyy 'at' h:mm a") : "Unknown"}
+                            </div>
+                          </div>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => uncompleteTaskMutation.mutate(task.id)}
+                            disabled={uncompleteTaskMutation.isPending}
+                            className="ml-4"
+                          >
+                            <Undo2 className="w-4 h-4 mr-1" />
+                            Restore
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))
+                )}
+              </div>
             </TabsContent>
 
             <TabsContent value="immediate">
