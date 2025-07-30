@@ -22,7 +22,7 @@ export default function Dashboard() {
   const queryClient = useQueryClient();
   const [addTaskModalOpen, setAddTaskModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
-  const [selectedUrgency, setSelectedUrgency] = useState("medium");
+  const [selectedUrgency, setSelectedUrgency] = useState<"immediate" | "medium" | "delayed">("medium");
   const [notification, setNotification] = useState<{ title: string; message: string } | null>(null);
 
   // Redirect to home if not authenticated
@@ -124,7 +124,7 @@ export default function Dashboard() {
     },
   });
 
-  const handleAddTask = (urgency: string) => {
+  const handleAddTask = (urgency: "immediate" | "medium" | "delayed") => {
     setSelectedUrgency(urgency);
     setEditingTask(null);
     setAddTaskModalOpen(true);
@@ -242,6 +242,7 @@ export default function Dashboard() {
         open={addTaskModalOpen}
         onOpenChange={setAddTaskModalOpen}
         editingTask={editingTask}
+        defaultUrgency={selectedUrgency}
       />
 
       {/* Notification Toast */}

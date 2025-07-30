@@ -206,6 +206,59 @@ export class MemoryStorage implements IStorage {
     return completedTask;
   }
 
+  async uncompleteTask(taskId: string, userId: string): Promise<Task> {
+    const task = this.tasks.get(taskId);
+    if (!task || task.userId !== userId) {
+      throw new Error('Task not found');
+    }
+
+    const uncompletedTask: Task = {
+      ...task,
+      completed: false,
+      completedAt: null,
+      updatedAt: new Date(),
+    };
+    this.tasks.set(taskId, uncompletedTask);
+
+    // Reverse daily stats changes
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const existingStats = await this.getUserDailyStats(userId, today);
+    if (existingStats) {
+      const newStats = {
+        tasksCompleted: Math.max(0, (existingStats.tasksCompleted || 0) - 1),
+        xpEarned: Math.max(0, (existingStats.xpEarned || 0) - this.getXPForUrgency(task.urgency)),
+      } as any;
+      
+      // Update urgency-specific completed count
+      if (task.urgency === 'immediate') {
+        newStats.immediateCompleted = Math.max(0, (existingStats.immediateCompleted || 0) - 1);
+      } else if (task.urgency === 'medium') {
+        newStats.mediumCompleted = Math.max(0, (existingStats.mediumCompleted || 0) - 1);
+      } else if (task.urgency === 'delayed') {
+        newStats.delayedCompleted = Math.max(0, (existingStats.delayedCompleted || 0) - 1);
+      }
+      
+      await this.updateDailyStats(userId, today, newStats);
+    }
+
+    // Reverse user XP and level changes
+    const user = await this.getUser(userId);
+    if (user) {
+      const xpToRemove = this.getXPForUrgency(task.urgency);
+      const newXP = Math.max(0, (user.xp || 0) - xpToRemove);
+      const newLevel = Math.max(1, Math.floor(newXP / 100) + 1);
+      
+      await this.updateUserStats(userId, {
+        xp: newXP,
+        level: newLevel,
+      });
+    }
+
+    return uncompletedTask;
+  }
+
   private getXPForUrgency(urgency: string): number {
     switch (urgency) {
       case 'immediate': return 15;

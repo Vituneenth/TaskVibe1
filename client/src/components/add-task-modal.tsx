@@ -14,12 +14,13 @@ interface AddTaskModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   editingTask?: Task | null;
+  defaultUrgency?: "immediate" | "medium" | "delayed";
 }
 
-export function AddTaskModal({ open, onOpenChange, editingTask }: AddTaskModalProps) {
+export function AddTaskModal({ open, onOpenChange, editingTask, defaultUrgency }: AddTaskModalProps) {
   const [title, setTitle] = useState(editingTask?.title || "");
   const [description, setDescription] = useState(editingTask?.description || "");
-  const [urgency, setUrgency] = useState(editingTask?.urgency || "medium");
+  const [urgency, setUrgency] = useState(editingTask?.urgency || defaultUrgency || "medium");
   const { toast } = useToast();
   const queryClient = useQueryClient();
 

@@ -74,6 +74,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get('/api/tasks/completed', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const completedTasks = await storage.getUserTasks(userId, true);
+      res.json(completedTasks);
+    } catch (error) {
+      console.error("Error fetching completed tasks:", error);
+      res.status(500).json({ message: "Failed to fetch completed tasks" });
+    }
+  });
+
   app.post('/api/tasks', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.claims.sub;
@@ -128,6 +139,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error completing task:", error);
       res.status(500).json({ message: "Failed to complete task" });
+    }
+  });
+
+  app.post('/api/tasks/:id/uncomplete', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const taskId = req.params.id;
+      
+      const task = await storage.uncompleteTask(taskId, userId);
+      res.json(task);
+    } catch (error) {
+      console.error("Error uncompleting task:", error);
+      res.status(500).json({ message: "Failed to uncomplete task" });
     }
   });
 

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useTheme } from "@/components/theme-provider";
 import { ListTodo, Home, Clock, BarChart3, Trophy, Sun, Moon, Monitor, Flame } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Link, useLocation } from "wouter";
 
 interface SidebarProps {
   user: User;
@@ -10,6 +11,7 @@ interface SidebarProps {
 
 export function Sidebar({ user }: SidebarProps) {
   const { theme, setTheme } = useTheme();
+  const [location] = useLocation();
 
   const themeButtons = [
     { value: "light", icon: Sun, label: "Light" },
@@ -65,14 +67,28 @@ export function Sidebar({ user }: SidebarProps) {
         
         {/* Navigation Menu */}
         <nav className="space-y-2">
-          <a href="#" className="flex items-center space-x-3 px-3 py-2 bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded-lg">
-            <Home className="w-5 h-5" />
-            <span className="font-medium">Dashboard</span>
-          </a>
-          <a href="#" className="flex items-center space-x-3 px-3 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
-            <Clock className="w-5 h-5" />
-            <span>Task History</span>
-          </a>
+          <Link href="/">
+            <a className={cn(
+              "flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors",
+              location === "/" 
+                ? "bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300" 
+                : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+            )}>
+              <Home className="w-5 h-5" />
+              <span className="font-medium">Dashboard</span>
+            </a>
+          </Link>
+          <Link href="/task-history">
+            <a className={cn(
+              "flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors",
+              location === "/task-history"
+                ? "bg-indigo-50 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300"
+                : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+            )}>
+              <Clock className="w-5 h-5" />
+              <span>Task History</span>
+            </a>
+          </Link>
           <a href="#" className="flex items-center space-x-3 px-3 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
             <BarChart3 className="w-5 h-5" />
             <span>Analytics</span>
