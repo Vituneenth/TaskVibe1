@@ -59,7 +59,7 @@ export default function TaskHistory() {
       case "immediate":
         return <AlertCircle className="w-4 h-4 text-red-500" />;
       case "medium":
-        return <Clock className="w-4 h-4 text-orange-500" />;
+        return <Clock className="w-4 h-4 text-yellow-500" />;
       case "delayed":
         return <CheckCircle2 className="w-4 h-4 text-blue-500" />;
       default:
@@ -72,7 +72,7 @@ export default function TaskHistory() {
       case "immediate":
         return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
       case "medium":
-        return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200";
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
       case "delayed":
         return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
       default:
